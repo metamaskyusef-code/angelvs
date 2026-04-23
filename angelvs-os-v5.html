@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✦ ANGELVS OS v5.0 — Theurgic Operating System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Share+Tech+Mono&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F5EFE0;--bg2:#EDE5CF;--bg3:#E4D9BE;--bg4:#DDD0AA;
+  --g:#8B6914;--g2:#C4973A;--g3:#E8B84B;
+  --tx:#1C1409;--tx2:#4A3516;--tx3:#7A5C2E;
+  --green:#2E7D5B;--red:#A03020;--blue:#5B7FA6;--purple:#6B4FA0;--amber:#C47A1A;
+}
+body{background:var(--bg);font-family:'Share Tech Mono',monospace;color:var(--tx);min-height:100vh;
+  background-image:radial-gradient(ellipse at 20% 10%,#C4973A18 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,#8B691412 0%,transparent 50%)}
+.cinzel{font-family:'Cinzel',serif}
+.mono{font-family:'Share Tech Mono',monospace}
+.garamond{font-family:'EB Garamond',serif}
+
+/* HEADER */
+#header{position:sticky;top:0;z-index:100;border-bottom:1px solid #C4973A44;background:#F5EFE0EE;backdrop-filter:blur(12px)}
+.header-inner{max-width:1200px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.logo-title{color:var(--g);font-size:20px;font-weight:900;letter-spacing:4px;font-family:'Cinzel',serif}
+.logo-sub{color:var(--tx3);font-size:8px;letter-spacing:4px;margin-top:2px}
+.phase-pills{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.phase-pill{display:flex;align-items:center;gap:5px;padding:5px 12px;border:1px solid #C4973A44;color:var(--tx3);font-size:9px;letter-spacing:1.5px;transition:all .2s;font-family:'Share Tech Mono',monospace}
+.phase-pill.active{border-color:var(--g);color:var(--tx);background:#8B691414}
+.phase-pill.done{border-color:var(--g);color:var(--g);background:#8B691418}
+.header-right{display:flex;align-items:center;gap:12px}
+#langBtn{display:flex;align-items:center;gap:4px;padding:5px 10px;border:1px solid #C4973A66;color:var(--g);font-size:9px;letter-spacing:1.5px;background:transparent;cursor:pointer;font-family:'Share Tech Mono',monospace;transition:all .2s}
+#langBtn:hover{background:var(--bg3)}
+#clock{color:var(--tx2);font-size:11px;text-align:right}
+#clockdate{color:var(--tx3);font-size:8px}
+
+/* TABS */
+.tab-bar{border-top:1px solid #C4973A30;display:flex;max-width:1200px;margin:0 auto;padding:0 20px}
+.tab-btn{padding:8px 20px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;border:none;border-bottom:2px solid transparent;background:transparent;cursor:pointer;color:var(--tx3);transition:all .2s}
+.tab-btn.active{border-color:var(--g);color:var(--g);font-weight:700}
+
+/* MAIN */
+.main{max-width:1200px;margin:0 auto;padding:24px 20px 60px;display:flex;flex-direction:column;gap:24px}
+
+/* PANELS */
+.panel{border:1px solid #C4973A55;background:var(--bg2);padding:24px;transition:border-color .3s}
+.panel.done-panel{border-color:#8B691466}
+.panel-header{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.panel-icon{color:var(--g);font-size:16px}
+.panel-title{font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--g);letter-spacing:3px}
+.panel-status{margin-left:auto;color:var(--green);font-size:10px;font-family:'Share Tech Mono',monospace}
+
+/* GRID */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+@media(max-width:768px){.grid2,.grid3{grid-template-columns:1fr}.phase-pills{display:none}}
+
+/* INPUTS */
+.field-label{color:var(--tx3);font-size:9px;letter-spacing:2.5px;display:block;margin-bottom:5px}
+input[type=text],input[type=date],input[type=time],select,textarea{
+  width:100%;background:var(--bg3);border:1px solid #C4973A66;color:var(--tx);
+  font-family:'Share Tech Mono',monospace;font-size:12px;padding:10px 12px;outline:none;
+  transition:border-color .2s;color-scheme:light}
+input:focus,select:focus,textarea:focus{border-color:var(--g)}
+input:disabled,select:disabled{opacity:.5;cursor:not-allowed}
+textarea{height:80px;resize:none}
+select option{background:var(--bg2)}
+.space-y>*+*{margin-top:14px}
+
+/* BUTTONS */
+.gold-btn{padding:12px 32px;border:1px solid var(--g);color:var(--bg);background:var(--g);
+  font-family:'Cinzel',serif;font-size:12px;letter-spacing:3px;font-weight:700;cursor:pointer;
+  transition:all .3s;box-shadow:0 4px 20px #8B691440}
+.gold-btn:disabled{border-color:#C4973A55;color:#C4973A55;background:transparent;box-shadow:none;cursor:not-allowed}
+.gold-btn:not(:disabled):hover{background:#6B5010;box-shadow:0 6px 28px #8B691460}
+
+.step-btn{background:transparent;border:1px solid #C4973A44;color:var(--tx2);
+  font-family:'Share Tech Mono',monospace;font-size:10px;padding:12px 10px;cursor:pointer;
+  text-align:left;transition:all .2s;line-height:1.5}
+.step-btn .snum{display:block;font-family:'Cinzel',serif;font-size:8px;color:var(--g2);letter-spacing:2px;margin-bottom:4px}
+.step-btn:not(:disabled):hover{border-color:var(--g);color:var(--g);background:#8B691410}
+.step-btn.done-step{border-color:var(--g);color:var(--g);background:#8B691412}
+.step-btn:disabled{opacity:.35;cursor:not-allowed}
+.btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+@media(max-width:600px){.btn-grid{grid-template-columns:1fr}}
+
+/* CARDS */
+.card{border:1px solid #C4973A55;background:var(--bg3);padding:16px}
+.card-gold{border:1px solid var(--g);background:var(--bg3);padding:16px}
+.info-box{display:flex;align-items:flex-start;gap:8px;padding:12px;border:1px solid;margin-top:10px}
+
+/* DIVIDER */
+.divider{display:flex;align-items:center;gap:12px;margin:20px 0}
+.divider::before,.divider::after{content:'';flex:1;height:1px}
+.divider::before{background:linear-gradient(90deg,transparent,#C4973A88)}
+.divider::after{background:linear-gradient(90deg,#C4973A88,transparent)}
+.divider span{color:var(--g);font-size:9px;letter-spacing:3px;white-space:nowrap}
+
+/* ASCII TABLE */
+.ascii-row{display:flex;align-items:center;gap:8px;margin-bottom:3px}
+.ascii-char{color:var(--g);font-size:10px;font-family:'Cinzel',serif;width:14px}
+.ascii-num{color:var(--tx2);font-size:9px;width:26px}
+.ascii-bin{color:var(--tx3);font-size:8px}
+
+/* STARS TABLE */
+.stars-scroll{max-height:320px;overflow-y:auto;border:1px solid #C4973A33}
+.star-row{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid #C4973A22;cursor:pointer;transition:background .15s}
+.star-row:hover{background:#C4973A15}
+.star-row.expanded{background:#C4973A15}
+.star-name{font-family:'Cinzel',serif;font-weight:700;color:var(--tx);font-size:10px;width:80px}
+.star-sign{color:var(--tx2);font-size:9px;width:75px}
+.star-virtue{color:var(--tx3);font-size:9px;font-family:'EB Garamond',serif;font-style:italic;flex:1}
+.star-chevron{color:#C4973A88;font-size:10px;transition:transform .2s;flex-shrink:0}
+.star-detail{padding:12px 16px;border-bottom:1px solid #C4973A22;background:#C4973A0A;animation:fadeUp .25s ease;display:none}
+.star-detail.open{display:block}
+.star-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+.detail-lbl{color:var(--g);font-size:8px;letter-spacing:2px;margin-bottom:3px}
+.detail-val{color:var(--tx2);font-size:11px;font-family:'EB Garamond',serif}
+
+/* KAMEA */
+.kamea-selector{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.kamea-btn{padding:5px 10px;border:1px solid #C4973A55;color:var(--tx2);background:transparent;font-family:'Cinzel',serif;font-size:9px;letter-spacing:1px;cursor:pointer;transition:all .2s}
+.kamea-btn.active{border-color:var(--g);color:var(--bg);background:var(--g)}
+#kamea-grid{display:grid;gap:2px;border:1px solid #C4973A55;padding:6px;background:var(--bg3);width:fit-content;margin:0 auto}
+.kamea-cell{display:flex;align-items:center;justify-content:center;border:1px solid #C4973A33;font-size:10px;color:var(--tx3);font-family:'Share Tech Mono',monospace;transition:all .2s}
+.kamea-cell.highlight{border-color:var(--g);color:var(--g);background:#8B691418;font-weight:bold}
+
+/* HOUR GRID */
+.hour-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:3px;margin-top:12px}
+.hour-cell{display:flex;flex-direction:column;align-items:center;padding:6px;border:1px solid #C4973A22}
+.hour-cell.active-hour{border-color:currentColor}
+.hour-sym{font-size:15px}
+.hour-num{font-size:7px;color:var(--tx3)}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:600px){.kpi-grid{grid-template-columns:1fr}}
+.kpi-cat{padding:16px;border:1px solid}
+.kpi-cat-header{display:flex;align-items:center;gap:6px;margin-bottom:14px}
+.kpi-cat-title{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;font-weight:700}
+.kpi-item{display:flex;align-items:flex-start;gap:10px;padding:7px;border:1px solid;cursor:pointer;margin-bottom:6px;transition:all .2s}
+.kpi-check{width:13px;height:13px;border:1px solid;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;transition:all .2s}
+.kpi-text{font-family:'EB Garamond',serif;font-size:11px;line-height:1.5}
+
+/* PROGRESS */
+.progress-bar{width:100%;height:4px;background:#C4973A33;margin-top:6px}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--g),var(--g2));transition:width .5s}
+
+/* OUTPUT BLOCKS */
+.out-block{border:1px solid #C4973A55;background:var(--bg2);padding:20px;margin-top:10px;animation:fadeUp .35s ease}
+.out-block-gold{border:2px solid var(--g);background:var(--bg2);padding:20px;margin-top:10px;box-shadow:0 4px 24px #8B691422;animation:fadeUp .4s ease}
+.out-title{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--g);border-bottom:1px solid #C4973A44;padding-bottom:8px;margin-bottom:16px}
+.final-row{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #C4973A30;align-items:flex-start}
+.final-row:last-child{border-bottom:none}
+.final-key{font-family:'Cinzel',serif;color:var(--g);font-size:8px;letter-spacing:2px;min-width:160px;flex-shrink:0;padding-top:2px}
+.final-val{font-family:'EB Garamond',serif;color:var(--tx);font-size:12px;line-height:1.5}
+
+/* LOG */
+#log-box{padding:14px;border:1px solid #2E7D5B33;background:#2E7D5B08;display:none}
+.log-entry{color:var(--green);font-size:9px;line-height:1.8}
+
+/* FOOTER */
+.footer{text-align:center;padding-bottom:40px}
+
+/* PLANET HOUR BLOCK */
+.ph-block{padding:16px;border:1px solid;margin-bottom:12px}
+
+/* SIGIL SVG */
+#sigil-svg{border:1px solid #C4973A55;background:var(--bg3);display:block;margin:0 auto}
+
+/* SUMMARY GRID */
+.summary-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px}
+@media(max-width:600px){.summary-grid{grid-template-columns:1fr 1fr}}
+.sum-lbl{color:var(--tx3);font-size:8px;letter-spacing:2px;margin-bottom:4px}
+.sum-val{font-family:'Cinzel',serif;color:var(--tx);font-size:10px;font-weight:700}
+
+/* MINI KAMEA ORACLE */
+#oracle-kamea-mini{display:grid;gap:2px;max-width:200px}
+.ok-cell{border:1px solid #C4973A55;color:var(--tx2);background:var(--bg3);font-family:'Share Tech Mono',monospace;font-size:9px;display:flex;align-items:center;justify-content:center;aspect-ratio:1}
+
+/* GEO BTN */
+.geo-btn{display:flex;align-items:center;gap:6px;padding:8px 16px;border:1px solid #C4973A66;color:var(--tx2);font-size:10px;font-family:'Share Tech Mono',monospace;background:transparent;cursor:pointer;transition:all .2s}
+.geo-btn:hover{background:var(--bg3)}
+
+/* COMPLETE BANNER */
+.complete-banner{padding:20px;border:1px solid var(--g);background:#8B691412;text-align:center;animation:fadeUp .5s ease}
+
+/* TABS hidden */
+.tab-content{display:none}
+.tab-content.active{display:flex;flex-direction:column;gap:24px}
+
+/* Warning box */
+.warn-box{display:flex;align-items:flex-start;gap:8px;padding:12px;border:1px solid #C47A1A44;background:#C47A1A0A}
+
+/* Info panel (kamea info) */
+.info-panel{padding:14px;border:1px solid #6B4FA055;background:#6B4FA008;margin-bottom:14px;animation:fadeUp .3s ease}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes draw{from{stroke-dashoffset:3000}to{stroke-dashoffset:0}}
+@keyframes pulseG{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:#C4973A55}
+
+.sigil-path{stroke-dasharray:3000;animation:draw 2.5s ease forwards}
+.pulse-diamond{animation:pulseG 3s ease infinite}
+
+.hidden{display:none!important}
+.flex{display:flex}.items-center{align-items:center}.gap-2{gap:8px}.gap-3{gap:12px}
+.mt-2{margin-top:8px}.mt-3{margin-top:12px}.mt-4{margin-top:16px}.mt-5{margin-top:20px}.mt-6{margin-top:24px}
+.mb-1{margin-bottom:4px}.mb-2{margin-bottom:8px}.mb-3{margin-bottom:12px}.mb-4{margin-bottom:16px}
+.ml-auto{margin-left:auto}
+.text-center{text-align:center}
+.italic{font-style:italic}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header">
+  <div class="header-inner">
+    <div>
+      <div class="cinzel logo-title">✦ ANGELVS OS</div>
+      <div class="mono logo-sub">THEURGIC OPERATING SYSTEM · V5.0</div>
+    </div>
+    <div class="phase-pills" id="phasePills">
+      <div class="phase-pill active" id="pp1">🔲 1. IDENTIDAD</div>
+      <span style="color:#C4973A66;font-size:9px">›</span>
+      <div class="phase-pill" id="pp2">🔒 2. MAPEO ESTELAR</div>
+      <span style="color:#C4973A66;font-size:9px">›</span>
+      <div class="phase-pill" id="pp3">🔒 3. FORJAR SIGILO</div>
+      <span style="color:#C4973A66;font-size:9px">›</span>
+      <div class="phase-pill" id="pp4">🔒 4. EJECUTAR PLAN</div>
+    </div>
+    <div class="header-right">
+      <button id="langBtn" onclick="toggleLang()">🌐 ES</button>
+      <div>
+        <div class="mono" id="clock" style="text-align:right"></div>
+        <div class="mono" id="clockdate" style="text-align:right"></div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-bar">
+    <button class="tab-btn active" id="tab-identity-btn" onclick="switchTab('identity')">◈ SISTEMA DE IDENTIDAD</button>
+    <button class="tab-btn" id="tab-oracle-btn" onclick="switchTab('oracle')">◈ ORÁCULO TEÚRGICO</button>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ════════ TAB: ORÁCULO ════════ -->
+  <div class="tab-content" id="tab-oracle">
+
+    <div class="panel" id="oraclePanel">
+      <div class="panel-header">
+        <span class="panel-icon">🛡</span>
+        <span class="panel-title cinzel" id="oTit">MÓDULO DE ENTRADA — INTENCIÓN OPERATIVA</span>
+      </div>
+
+      <div class="grid2" style="margin-bottom:14px">
+        <div>
+          <label class="field-label" id="oLbl1">▸ CATEGORÍA DE INTERVENCIÓN</label>
+          <select id="oracleCat" onchange="oracleCatChange()">
+            <option value="">— Seleccionar —</option>
+            <option value="laboral">LABORAL / FINANZAS</option>
+            <option value="psicologico">PSICOLÓGICO</option>
+            <option value="relacional">RELACIONAL / AFECTIVO</option>
+            <option value="espiritual">ESPIRITUAL / CONEXIÓN</option>
+            <option value="salud">SALUD / VITALIDAD</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label" id="oLbl2">▸ DOMINIO ESPECÍFICO</label>
+          <select id="oracleDomain"><option value="">— Seleccionar —</option></select>
+        </div>
+      </div>
+
+      <div style="margin-bottom:16px">
+        <label class="field-label" id="oLbl3">▸ DESCRIPCIÓN DE LA PROBLEMÁTICA</label>
+        <textarea id="oracleProb" placeholder="Describe con precisión el aspecto de tu vida que requiere alineación teúrgica..."></textarea>
+      </div>
+
+      <div class="btn-grid">
+        <button class="step-btn" id="oBtn1" onclick="oracleStep1()" disabled>
+          <span class="snum">◈ PASO 01</span>
+          <span id="oB1t">AUDITORÍA DE IDENTIDAD</span>
+        </button>
+        <button class="step-btn" id="oBtn2" onclick="oracleStep2()" disabled>
+          <span class="snum">◈ PASO 02</span>
+          <span id="oB2t">ANÁLISIS ESTELAR & PSICOLÓGICO</span>
+        </button>
+        <button class="step-btn" id="oBtn3" onclick="oracleStep3()" disabled>
+          <span class="snum">◈ PASO 03</span>
+          <span id="oB3t">FORJA — KAMEA & SIGILO</span>
+        </button>
+        <button class="step-btn" id="oBtn4" onclick="oracleStep4()" disabled>
+          <span class="snum">◈ PASO 04</span>
+          <span id="oB4t">CONCLUSIONES & CRONOCRACIA</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Oracle outputs -->
+    <div id="oOut1" class="out-block hidden">
+      <div class="out-title">◈ MÓDULO I — AUDITORÍA DE IDENTIDAD TEÚRGICA</div>
+      <div id="oOut1c"></div>
+    </div>
+    <div id="oOut2" class="out-block hidden">
+      <div class="out-title">◈ MÓDULO II — ANÁLISIS ESTELAR & PSICOLÓGICO</div>
+      <div id="oOut2c"></div>
+    </div>
+    <div id="oOut3" class="out-block hidden">
+      <div class="out-title">◈ MÓDULO III — FORJA DE SOLUCIÓN</div>
+      <div id="oOut3c"></div>
+    </div>
+    <div id="oOut4" class="out-block-gold hidden">
+      <div class="out-title">◈ MÓDULO IV — SÍNTESIS OPERATIVA & CRONOCRACIA</div>
+      <div id="oOut4c"></div>
+    </div>
+  </div>
+
+  <!-- ════════ TAB: IDENTITY ════════ -->
+  <div class="tab-content active" id="tab-identity">
+
+    <!-- PHASE 1 -->
+    <div class="panel" id="phase1Panel">
+      <div class="panel-header">
+        <span class="panel-icon">⚙</span>
+        <span class="panel-title cinzel" id="ph1Title">FASE I — SINCRONIZACIÓN DE IDENTIDAD</span>
+        <span class="panel-status hidden" id="ph1Status">● SINCRONIZADO</span>
+      </div>
+
+      <div class="grid2">
+        <div class="space-y">
+          <div>
+            <label class="field-label" id="lName">NOMBRE OPERATIVO</label>
+            <input type="text" id="iName" placeholder="Nombre completo...">
+          </div>
+          <div>
+            <label class="field-label" id="lLoc">ANCLAJE GEOGRÁFICO</label>
+            <input type="text" id="iLoc" placeholder="Ciudad, País...">
+          </div>
+          <div>
+            <label class="field-label" id="lGeo">COORDENADAS GPS (PARA PRECISIÓN SOLAR)</label>
+            <button class="geo-btn" id="geoBtn" onclick="requestGeo()">📍 <span id="geoText">Obtener coordenadas reales</span></button>
+            <div id="geoStatus" class="mt-2"></div>
+          </div>
+        </div>
+        <div class="space-y">
+          <div>
+            <label class="field-label" id="lDate">FECHA NATAL (YYYY-MM-DD)</label>
+            <input type="date" id="iBirth">
+          </div>
+          <div>
+            <label class="field-label" id="lTime">HORA NATAL (OPCIONAL)</label>
+            <input type="time" id="iTime">
+          </div>
+          <div class="warn-box" id="timeWarn">
+            <span style="color:#C47A1A;margin-top:2px;flex-shrink:0">⚠</span>
+            <span class="mono" style="color:#C47A1A;font-size:10px;line-height:1.6" id="warnText">LA IMPRECISIÓN ES EL VELO DE LA VERDAD. La hora exacta es requerida para alineación cronocrática completa.</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="identityResults" class="hidden mt-4">
+        <div class="grid3">
+          <div class="card">
+            <div class="mono mb-3" style="color:var(--tx3);font-size:9px;letter-spacing:2.5px">ASCII → BINARY MAPPING</div>
+            <div id="asciiDisplay"></div>
+          </div>
+          <div class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:center">
+            <div class="mono mb-2" style="color:var(--tx3);font-size:9px;letter-spacing:2.5px">THEURGIC ID</div>
+            <div class="cinzel" style="color:var(--g);font-size:22px;font-weight:900;letter-spacing:2px" id="theurgicID"></div>
+            <div class="mono mt-1" style="color:var(--tx3);font-size:8px">HEX-HASH · XOR-CHALDEAN</div>
+            <div class="mono mt-2" style="color:var(--tx2);font-size:9px;text-align:center" id="theurgicSub"></div>
+          </div>
+          <div class="card" id="potencyCard"></div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <button class="gold-btn" id="syncBtn" onclick="executePhase1()" disabled>⊕ SINCRONIZAR IDENTIDAD</button>
+      </div>
+    </div>
+
+    <!-- PHASE 2 (hidden until unlocked) -->
+    <div class="panel hidden" id="phase2Panel">
+      <div class="panel-header">
+        <span class="panel-icon">★</span>
+        <span class="panel-title cinzel" id="ph2Title">FASE II — MAPEO ESTELAR & CRONOCRACIA</span>
+        <span class="panel-status hidden" id="ph2Status">● CARTOGRAFIADO</span>
+      </div>
+
+      <div class="grid2">
+        <!-- Planetary Hours -->
+        <div>
+          <div class="divider"><span id="dHours">HORA PLANETARIA ACTUAL</span></div>
+          <div id="planetHourDisplay">
+            <div class="card" style="color:var(--tx3);font-size:10px">Activa para calcular la hora presente...</div>
+          </div>
+        </div>
+
+        <!-- Stars -->
+        <div>
+          <div class="divider"><span id="dStars">ESTRELLAS BEHENIAN (AGRIPPA)</span></div>
+          <div class="stars-scroll" id="starsTable"></div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <button class="gold-btn" id="stellarBtn" onclick="executePhase2()">✦ COMPUTAR ALINEACIÓN ESTELAR</button>
+      </div>
+    </div>
+
+    <!-- PHASE 3 -->
+    <div class="panel hidden" id="phase3Panel">
+      <div class="panel-header">
+        <span class="panel-icon">⬡</span>
+        <span class="panel-title cinzel" id="ph3Title">FASE III — KAMEA & FORJA DE SIGILO</span>
+        <span class="panel-status hidden" id="ph3Status">● FORJADO</span>
+      </div>
+
+      <div class="grid2">
+        <!-- Kamea -->
+        <div>
+          <div class="divider"><span id="dKamea">CUADRADO MÁGICO (KAMEA)</span></div>
+          <button onclick="toggleKameaInfo()" style="color:#6B4FA0;background:none;border:none;cursor:pointer;font-size:11px;margin-bottom:8px">📖 <span id="kameaInfoBtn">¿Qué es un Kamea?</span></button>
+          <div id="kameaInfo" class="info-panel hidden">
+            <div class="cinzel mb-2" style="color:#6B4FA0;font-size:10px;letter-spacing:2px" id="kameaInfoTitle">¿QUÉ ES UN KAMEA?</div>
+            <div class="garamond" style="color:var(--tx2);font-size:11px;line-height:1.7" id="kameaInfoText">Un Kamea (del hebreo קָמֵעַ) es un cuadrado mágico donde cada fila, columna y diagonal suman el mismo número. Agrippa los codifica en Occulta Philosophia (1531) como matrices de poder planetario.</div>
+          </div>
+          <div class="kamea-selector" id="kameaSelector"></div>
+          <div class="card mb-3" id="kameaDesc"></div>
+          <div id="kamea-grid"></div>
+        </div>
+
+        <!-- Sigil -->
+        <div>
+          <div class="divider"><span id="dSigil">SIGILO VECTORIAL</span></div>
+          <button onclick="toggleSigilInfo()" style="color:#6B4FA0;background:none;border:none;cursor:pointer;font-size:11px;margin-bottom:8px">📖 <span id="sigilInfoBtn">¿Cómo se genera el Sigilo?</span></button>
+          <div id="sigilInfo" class="info-panel hidden">
+            <div class="cinzel mb-2" style="color:#6B4FA0;font-size:10px;letter-spacing:2px" id="sigilInfoTitle">¿CÓMO SE GENERA EL SIGILO?</div>
+            <div class="garamond" style="color:var(--tx2);font-size:11px;line-height:1.7" id="sigilInfoText">Cada letra del nombre se convierte a ASCII, sufre reducción teosófica y se mapea como nodo en la cuadrícula. Se traza un vector continuo conectando cada nodo.</div>
+          </div>
+          <div id="sigilContainer" class="text-center">
+            <svg id="sigil-svg" width="300" height="300" viewBox="0 0 340 340"></svg>
+            <div class="mono mt-2" style="color:var(--tx2);font-size:9px" id="sigilSeq"></div>
+            <div class="mono mt-1" style="color:var(--tx3);font-size:8px" id="sigilNote"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <button class="gold-btn" id="sigilBtn" onclick="executePhase3()">⬡ FORJAR SIGILO</button>
+      </div>
+    </div>
+
+    <!-- PHASE 4 -->
+    <div class="panel hidden" id="phase4Panel">
+      <div class="panel-header">
+        <span class="panel-icon">✓</span>
+        <span class="panel-title cinzel" id="ph4Title">FASE IV — PLAN EJECUTIVO DE OPERACIÓN</span>
+        <span class="mono ml-auto" id="kpiCounter" style="color:var(--tx3);font-size:10px">0/12 EJECUTADO</span>
+      </div>
+
+      <div class="kpi-grid" id="kpiGrid"></div>
+
+      <div class="mt-4 mb-4">
+        <div class="flex items-center" style="justify-content:space-between;margin-bottom:4px">
+          <span class="mono" style="color:var(--g);font-size:9px" id="progLabel">PROGRESO DE OPERACIÓN</span>
+          <span class="mono" style="color:var(--g);font-size:9px" id="progPct">0%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="progFill" style="width:0%"></div></div>
+      </div>
+
+      <div id="completeBanner" class="complete-banner hidden">
+        <div class="cinzel" style="color:var(--g);font-size:16px;letter-spacing:4px">✦ OPERACIÓN COMPLETA ✦</div>
+        <div class="garamond italic mt-2" style="color:var(--tx2);font-size:13px" id="completeText">Alineación Teúrgica Alcanzada · ANGELVS OS v5.0</div>
+      </div>
+
+      <div class="card mt-4" id="summaryCard"></div>
+    </div>
+
+  </div><!-- /tab-identity -->
+
+  <!-- LOG -->
+  <div id="log-box">
+    <div class="mono mb-2" style="color:var(--green);font-size:8px;letter-spacing:3px">SYSTEM LOG</div>
+    <div id="logEntries"></div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="cinzel" style="color:var(--tx3);font-size:10px;letter-spacing:3px">✦ ANGELVS OS v5.0 ✦</div>
+    <div class="garamond italic mt-2" style="color:var(--tx2);font-size:12px" id="ftSource">Fundado sobre Agrippa · Dee · Trithemius · Barrett</div>
+    <div class="cinzel mt-2" style="color:var(--g);font-size:13px;letter-spacing:2px;font-weight:700">YUSEF LÁZARO YNERARITY GARCÍA</div>
+    <div class="mono mt-2" style="color:var(--tx3);font-size:8px" id="ftDomain">OUT OF DOMAIN: Consultas fuera de fuentes primarias no serán procesadas.</div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════════
+const POTENCY_DESC={1:{title:"UNIDAD PRIMORDIAL",en:"PRIMORDIAL UNITY",archetype:"El Soberano / The Sovereign",keyword:"INICIACIÓN",planet:"☉ Sol",desc:"Voluntad solar que inaugura ciclos. El número 1 es el origen de toda cadena causal.",descEn:"Solar will that inaugurates cycles. The number 1 is the origin of every causal chain."},2:{title:"DUALIDAD LUNAR",en:"LUNAR DUALITY",archetype:"El Oráculo / The Oracle",keyword:"RECEPCIÓN",planet:"☽ Luna",desc:"Inteligencia receptiva. El espejo que duplica todo poder.",descEn:"Receptive intelligence. The mirror that doubles all power."},3:{title:"TRÍADA JOVIANA",en:"JOVIAN TRIAD",archetype:"El Creador / The Creator",keyword:"SÍNTESIS",planet:"♃ Júpiter",desc:"Síntesis creativa donde la oposición se resuelve en expansión.",descEn:"Creative synthesis where opposition resolves into expansion."},4:{title:"CUADRATURA MERCURIAL",en:"MERCURIAL SQUARE",archetype:"El Arquitecto / The Architect",keyword:"FUNDAMENTO",planet:"☿ Mercurio",desc:"Fundación a través de estructura. La matriz de la manifestación.",descEn:"Foundation through structure. The matrix of manifestation."},5:{title:"QUINTAESENCIA MARCIAL",en:"MARTIAL QUINTESSENCE",archetype:"El Estratega / The Strategist",keyword:"CONQUISTA",planet:"♂ Marte",desc:"El conflicto dinámico como motor del progreso.",descEn:"Dynamic conflict as engine of progress."},6:{title:"ARMONÍA VENUSIANA",en:"VENUSIAN HARMONY",archetype:"El Diplomático / The Diplomat",keyword:"EQUILIBRIO",planet:"♀ Venus",desc:"Equilibrio de fuerzas opuestas. La belleza como inteligencia operativa.",descEn:"Balance of opposing forces. Beauty as operative intelligence."},7:{title:"COMPLETUD SATURNINA",en:"SATURNINE COMPLETION",archetype:"El Adepto / The Adept",keyword:"MAESTRÍA",planet:"♄ Saturno",desc:"El sello de los ciclos. Maestría a través de la limitación y el tiempo.",descEn:"The seal of cycles. Mastery through limitation and time."},8:{title:"PODER OCTAGONAL",en:"OCTAGONAL POWER",archetype:"El Magnate / The Magnate",keyword:"DOMINIÓN",planet:"♄ Saturno²",desc:"Dominio material. La duplicación del cuadrado en imperio.",descEn:"Material dominion. The doubling of the square into empire."},9:{title:"PERFECCIÓN ENÉADA",en:"ENNEAD PERFECTION",archetype:"El Hierofante / The Hierophant",keyword:"COMPLETUD",planet:"♂ Marte²",desc:"Completud hermética. Todos los números contenidos, todos los ciclos sellados.",descEn:"Hermetic completion. All numbers contained, all cycles sealed."}};
+
+const CHALDEAN=["Saturn","Jupiter","Mars","Sun","Venus","Mercury","Moon"];
+const PLANET_SYM={Saturn:"♄",Jupiter:"♃",Mars:"♂",Sun:"☉",Venus:"♀",Mercury:"☿",Moon:"☽"};
+const PLANET_COLOR={Saturn:"#4A5568",Jupiter:"#6B4FA0",Mars:"#A03020",Sun:"#B8860B",Venus:"#2E7D5B",Mercury:"#C47A1A",Moon:"#5B7FA6"};
+const DAY_RULER={0:"Sun",1:"Moon",2:"Mars",3:"Mercury",4:"Jupiter",5:"Venus",6:"Saturn"};
+const PLANET_VIRTUES={Saturn:{es:"Disciplina, Cronos, Restricción como poder",en:"Discipline, Chronos, Restriction as power"},Jupiter:{es:"Expansión, Abundancia, Visión estratégica",en:"Expansion, Abundance, Strategic vision"},Mars:{es:"Acción, Decisión, Ventaja competitiva",en:"Action, Decision, Competitive advantage"},Sun:{es:"Liderazgo, Visibilidad, Autoridad central",en:"Leadership, Visibility, Central authority"},Venus:{es:"Alianzas, Persuasión, Capital social",en:"Alliances, Persuasion, Social capital"},Mercury:{es:"Comunicación, Contratos, Inteligencia táctica",en:"Communication, Contracts, Tactical intelligence"},Moon:{es:"Intuición, Ciclos, Gestión del flujo",en:"Intuition, Cycles, Flow management"}};
+
+const BEHENIAN_STARS=[{name:"Regulus",sign:"Leo 29°",planet:"Sol / Júpiter",magnitude:1.35,virtue:{es:"Autoridad Real, Coraje Ejecutivo",en:"Royal Authority, Executive Courage"},application:{es:"Decisiones de alto impacto, liderazgo visible, confrontación directa con competencia.",en:"High-impact decisions, visible leadership, direct competition confrontation."},stone:"Granate",herb:"Ajenjo"},{name:"Spica",sign:"Libra 23°",planet:"Venus / Mercurio",magnitude:1.04,virtue:{es:"Artes, Ciencias, Fortuna Material",en:"Arts, Sciences, Material Fortune"},application:{es:"Negociaciones creativas, contratos creativos, acuerdos de beneficio mutuo.",en:"Creative negotiations, licensing deals, mutual benefit agreements."},stone:"Esmeralda",herb:"Salvia"},{name:"Algol",sign:"Tauro 26°",planet:"Saturno / Júpiter",magnitude:2.12,virtue:{es:"Transmutación de la Adversidad",en:"Transmutation of Adversity"},application:{es:"Reestructuraciones, crisis como oportunidad, conversión de amenazas en activos.",en:"Restructurings, crisis as opportunity, converting threats into assets."},stone:"Diamante negro",herb:"Eléboro"},{name:"Aldebaran",sign:"Géminis 9°",planet:"Marte",magnitude:0.85,virtue:{es:"Liderazgo Estratégico, Guerra Corporativa",en:"Strategic Leadership, Corporate War"},application:{es:"Expansión agresiva de mercado, adquisiciones hostiles, posicionamiento dominante.",en:"Aggressive market expansion, hostile acquisitions, dominant positioning."},stone:"Rubí",herb:"Euforbio"},{name:"Capella",sign:"Géminis 21°",planet:"Júpiter / Saturno",magnitude:0.08,virtue:{es:"Honor Institucional, Prosperidad Sostenida",en:"Institutional Honor, Sustained Prosperity"},application:{es:"Construcción de reputación a largo plazo, legado corporativo, herencia de marca.",en:"Long-term reputation building, corporate legacy, brand heritage."},stone:"Zafiro",herb:"Perejil"},{name:"Sirius",sign:"Cáncer 14°",planet:"Júpiter / Marte",magnitude:-1.46,virtue:{es:"Poder Supremo, Riqueza Extraordinaria",en:"Supreme Power, Extraordinary Wealth"},application:{es:"La estrella más brillante del cielo. Para operaciones de máxima escala y ambición.",en:"The brightest star in the sky. For maximum scale and ambition operations."},stone:"Berilo",herb:"Enebro"},{name:"Procyon",sign:"Cáncer 25°",planet:"Mercurio / Marte",magnitude:0.34,virtue:{es:"Acción Veloz, Astucia Táctica",en:"Swift Action, Tactical Cunning"},application:{es:"Time-to-market, primeras mentes, ventaja del early mover en mercados emergentes.",en:"Time-to-market, first mover advantage, early entry in emerging markets."},stone:"Ágata",herb:"Buttercup"},{name:"Alkaid",sign:"Virgo 26°",planet:"Luna",magnitude:1.85,virtue:{es:"Navegación, Memoria Institucional",en:"Navigation, Institutional Memory"},application:{es:"Gestión del conocimiento, sistemas de inteligencia competitiva.",en:"Knowledge management, competitive intelligence systems."},stone:"Cuarzo",herb:"Mandrágora"},{name:"Algorab",sign:"Libra 13°",planet:"Saturno / Marte",magnitude:2.95,virtue:{es:"Obstrucción, Vinculación Adversarial",en:"Obstruction, Adversarial Binding"},application:{es:"Defensa legal, bloqueo de competidores, auditorías estratégicas de riesgo.",en:"Legal defense, competitor blocking, strategic risk audits."},stone:"Ónix",herb:"Beleño"},{name:"Gienah",sign:"Libra 10°",planet:"Saturno / Marte",magnitude:2.59,virtue:{es:"Fortalecimiento de la Voluntad",en:"Fortification of Will"},application:{es:"Resiliencia ejecutiva, mantenimiento de posiciones bajo presión adversarial sostenida.",en:"Executive resilience, maintaining positions under sustained adversarial pressure."},stone:"Turmalina",herb:"Artemisa"},{name:"Arcturus",sign:"Libra 24°",planet:"Júpiter / Marte",magnitude:-0.05,virtue:{es:"Fama Duradera, Grandes Viajes",en:"Lasting Fame, Long Voyages"},application:{es:"Expansión internacional, construcción de marca global, operaciones multi-mercado.",en:"International expansion, global brand building, multi-market operations."},stone:"Jaspe",herb:"Cebada"},{name:"Alphecca",sign:"Escorpio 12°",planet:"Venus / Mercurio",magnitude:2.22,virtue:{es:"Elocuencia, Descubrimiento",en:"Eloquence, Discovery"},application:{es:"Presentaciones de alto impacto, fundraising, comunicación de visión a stakeholders.",en:"High-impact presentations, fundraising, vision communication to stakeholders."},stone:"Topacio",herb:"Rosa"},{name:"Antares",sign:"Sagitario 9°",planet:"Marte / Júpiter",magnitude:1.06,virtue:{es:"Victoria Militar, Ambición Suprema",en:"Military Victory, Supreme Ambition"},application:{es:"Batallas competitivas decisivas. Alta recompensa, alto riesgo.",en:"Decisive competitive battles. High reward, high risk."},stone:"Sardónica",herb:"Aristoloquia"},{name:"Vega",sign:"Capricornio 15°",planet:"Venus / Mercurio",magnitude:0.03,virtue:{es:"Artes Mágicas, Carisma Excepcional",en:"Magical Arts, Exceptional Charisma"},application:{es:"Influencia cultural, posicionamiento de thought leadership, atracción de talento élite.",en:"Cultural influence, thought leadership positioning, elite talent attraction."},stone:"Crisolito",herb:"Savory"},{name:"Deneb Algedi",sign:"Acuario 23°",planet:"Saturno / Júpiter",magnitude:2.85,virtue:{es:"Justicia, Asuntos Legales",en:"Justice, Legal Affairs"},application:{es:"Cumplimiento regulatorio, estructuras jurídicas sólidas, arbitrajes y litigios favorables.",en:"Regulatory compliance, solid legal structures, favorable arbitrations."},stone:"Calcedonia",herb:"Ruda"}];
+
+const KAMEA_DATA={3:{planet:"Saturn / Saturno",symbol:"♄",order:3,sum:15,total:45,magic:[2,7,6,9,5,1,4,3,8],desc:{es:"El cuadrado más antiguo conocido. Suma 15 en todas direcciones — número de Yahweh según Agrippa. Potencia la disciplina, los contratos vinculantes y el tiempo como activo estratégico.",en:"The oldest known magic square. Sums to 15 in all directions — Yahweh's number per Agrippa."}},4:{planet:"Jupiter / Júpiter",symbol:"♃",order:4,sum:34,total:136,magic:[4,14,15,1,9,7,6,12,5,11,10,8,16,2,3,13],desc:{es:"16 celdas que suman 34. Asociado a la expansión de riqueza, benefactores y crecimiento institucional. El Kamea del patronazgo y la abundancia multiplicada.",en:"16 cells summing to 34. Associated with wealth expansion, benefactors, and institutional growth."}},5:{planet:"Mars / Marte",symbol:"♂",order:5,sum:65,total:325,magic:[11,24,7,20,3,4,12,25,8,16,17,5,13,21,9,10,18,1,14,22,23,6,19,2,15],desc:{es:"25 celdas, suma 65. Cuadrado del conflicto resuelto en victoria. Para operaciones que requieren decisión bajo fuego, ventaja competitiva y acción sin demora.",en:"25 cells, sum 65. Square of conflict resolved in victory."}},6:{planet:"Sun / Sol",symbol:"☉",order:6,sum:111,total:666,magic:[6,32,3,34,35,1,7,11,27,28,8,30,19,14,16,15,23,24,18,20,22,21,17,13,25,29,10,9,26,12,36,5,33,4,2,31],desc:{es:"36 celdas, suma 111. El Kamea del Sol — autoridad, visibilidad, reconocimiento. Cada fila suma 111, el número del liderazgo irradiante.",en:"36 cells, sum 111. The Solar Kamea — authority, visibility, recognition."}},7:{planet:"Venus / Venus",symbol:"♀",order:7,sum:175,total:1225,magic:[22,47,16,41,10,35,4,5,23,48,17,42,11,29,30,6,24,49,18,36,12,13,31,7,25,43,19,37,38,14,32,1,26,44,20,21,39,8,33,2,27,45,46,15,40,9,34,3,28],desc:{es:"49 celdas, suma 175. El cuadrado venusiano codifica la atracción, la armonía y el capital social.",en:"49 cells, sum 175. The Venusian square encodes attraction, harmony, and social capital."}},8:{planet:"Mercury / Mercurio",symbol:"☿",order:8,sum:260,total:2080,magic:[8,58,59,5,4,62,63,1,49,15,14,52,53,11,10,56,41,23,22,44,45,19,18,48,32,34,35,29,28,38,39,25,40,26,27,37,36,30,31,33,17,47,46,20,21,43,42,24,9,55,54,12,13,51,50,16,64,2,3,61,60,6,7,57],desc:{es:"64 celdas, suma 260. Mercurio gobierna la comunicación, los contratos y la inteligencia táctica.",en:"64 cells, sum 260. Mercury governs communication, contracts, and tactical intelligence."}},9:{planet:"Moon / Luna",symbol:"☽",order:9,sum:369,total:3321,magic:[37,78,29,70,21,62,13,54,5,6,38,79,30,71,22,63,14,46,47,7,39,80,31,72,23,55,15,16,48,8,40,81,32,64,24,56,57,17,49,9,41,73,33,65,25,26,58,18,50,1,42,74,34,66,67,27,59,10,51,2,43,75,35,36,68,19,60,11,52,3,44,76,77,28,69,20,61,12,53,4,45],desc:{es:"81 celdas, suma 369. La Luna rige los ciclos, la intuición y los flujos de capital. El mayor de los cuadrados.",en:"81 cells, sum 369. The Moon governs cycles, intuition, and capital flows."}}};
+
+const ORACLE_DB={categories:{laboral:{planet:"Jupiter",angel:"Sachiel",starKey:"Regulus",kamea:4},psicologico:{planet:"Marte",angel:"Camael",starKey:"Algol",kamea:5},relacional:{planet:"Venus",angel:"Anael",starKey:"Spica",kamea:7},espiritual:{planet:"Sol",angel:"Michael",starKey:"Regulus",kamea:6},salud:{planet:"Sol",angel:"Raphael",starKey:"Alphecca",kamea:6}},hours:{laboral:{es:"Hora de Júpiter (Jueves, alba o mediodía)",en:"Jupiter Hour (Thursday, dawn or noon)"},psicologico:{es:"Hora de Marte (Martes, amanecer)",en:"Mars Hour (Tuesday, dawn)"},relacional:{es:"Hora de Venus (Viernes, atardecer)",en:"Venus Hour (Friday, dusk)"},espiritual:{es:"Hora del Sol (Domingo, mediodía solar)",en:"Solar Hour (Sunday, solar noon)"},salud:{es:"Hora del Sol (Domingo, amanecer)",en:"Solar Hour (Sunday, dawn)"}},talisman:{laboral:{es:"Graba el Kamea en hoja de estaño o papel dorado. Colócalo orientado al Este en tu espacio de trabajo, o llévalo sobre ti en metal dorado.",en:"Engrave the Kamea on tin foil or golden paper. Place facing East in your workspace, or carry it on you in golden metal."},psicologico:{es:"Inscribe el sigilo en papel rojo. Entiérralo en tierra firme al Norte, o quémalo en el ocaso del día de Marte.",en:"Inscribe the sigil on red paper. Bury it in firm earth to the North, or burn it at sunset on the day of Mars."},relacional:{es:"Traza el Kamea en cobre o papel verde. Guárdalo cerca del corazón o colócalo bajo la cama.",en:"Draw the Kamea on copper or green paper. Keep it near your heart or place it under the bed."},espiritual:{es:"Inscribe en papel blanco o lámina de oro. Coloca en altar orientado al Este, junto a incienso de olíbano.",en:"Inscribe on white paper or gold leaf. Place on an East-facing altar, alongside frankincense."},salud:{es:"Inscribe en papel amarillo o cera de abeja. Lleva contigo durante la convalecencia o coloca bajo la almohada.",en:"Inscribe on yellow paper or beeswax. Carry during convalescence or place under the pillow."}},psychDiag:{laboral:{es:"El nodo de Júpiter indica expansión bloqueada por factores de ego o carencia de estructura jerárquica. El sistema recomienda reestructuración de la cadena de valor personal.",en:"The Jupiter node indicates expansion blocked by ego factors. The system recommends restructuring the personal value chain."},psicologico:{es:"El nodo marciano revela energía sin canal. La ira y los celos son síntomas de potencia no dirigida. El diagnóstico psicosomático señala tensión en el plexo solar.",en:"The Martian node reveals uncanalized energy. Anger and jealousy are symptoms of undirected potency."},relacional:{es:"La influencia venusina detecta desequilibrio en el intercambio de dar/recibir. El vínculo presenta fracturas en el contrato sutil no verbal.",en:"Venusian influence detects imbalance in the give/receive exchange. The bond shows fractures in the non-verbal subtle contract."},espiritual:{es:"El Sol en posición de tránsito hacia la Casa XII sugiere periodo de retiro y contacto interior. El Ángel Guardián está activo pero el receptor está opacado por ruido mundano.",en:"The Sun in transit toward House XII suggests a period of retreat and inner contact."},salud:{es:"El análisis humoral detecta déficit del fuego vital (cholé). El organismo requiere restauración del equilibrio térmico y activación del meridiano del Corazón.",en:"Humoral analysis detects a deficit of vital fire. The organism requires restoration of thermal balance."}},domains:{es:{laboral:["— Seleccionar —","Éxito Profesional","Deuda / Liquidez","Expansión de Negocio","Carrera / Ascenso"],psicologico:["— Seleccionar —","Control de Ira","Celos / Envidia","Ansiedad / Miedo","Fortalecimiento del Ego"],relacional:["— Seleccionar —","Matrimonio / Unión","Reconciliación","Divorcio / Cierre de Ciclo","Atracción / Magnetismo"],espiritual:["— Seleccionar —","Conexión HGA","Purificación Ritual","Protección Activa","Elevación Vibracional"],salud:["— Seleccionar —","Vitalidad General","Convalecencia","Equilibrio Humoral","Inmunidad Energética"]},en:{laboral:["— Select —","Professional Success","Debt / Liquidity","Business Expansion","Career / Promotion"],psicologico:["— Select —","Anger Control","Jealousy / Envy","Anxiety / Fear","Ego Strengthening"],relacional:["— Select —","Marriage / Union","Reconciliation","Divorce / Cycle Closure","Attraction / Magnetism"],espiritual:["— Select —","HGA Connection","Ritual Purification","Active Protection","Vibrational Elevation"],salud:["— Select —","General Vitality","Convalescence","Humoral Balance","Energetic Immunity"]}}};
+
+const KPI_CATS=[{icon:"◎",label:{es:"C-Suite & Founders",en:"C-Suite & Founders"},color:"#8B6914",items:[{es:"Alinear la Potencia Natal con objetivos de Q3-Q4",en:"Align Natal Potency with Q3-Q4 objectives"},{es:"Programar decisiones críticas en Hora Solar o Joviana",en:"Schedule critical decisions during Solar or Jovian hours"},{es:"Ejecutar comunicados oficiales en Hora de Mercurio diurno",en:"Execute official communications during diurnal Mercury hour"}]},{icon:"◉",label:{es:"Capital & Inversión",en:"Capital & Investment"},color:"#2E7D5B",items:[{es:"Iniciar nuevas posiciones durante Hora de Júpiter",en:"Open new positions during Jupiter hour"},{es:"Cerrar ciclos de deuda en Hora Saturnal — rigor máximo",en:"Close debt cycles in Saturn hour — maximum rigor"},{es:"Revisar portfolio bajo Potencia Natal y ID Teúrgico",en:"Review portfolio under Natal Potency and Theurgic ID"}]},{icon:"◆",label:{es:"Estrategas & Consultores",en:"Strategists & Consultants"},color:"#6B4FA0",items:[{es:"Mapear stakeholders clave a arquetipos de Estrellas Behenian",en:"Map key stakeholders to Behenian Star archetypes"},{es:"Ejecutar workshops de alineación en Hora de Sol",en:"Run alignment workshops during Solar hour"},{es:"Diseñar Sigilo de la firma para formalización de acuerdos",en:"Design firm Sigil for agreement formalization"}]},{icon:"◇",label:{es:"Creadores & Artistas de Élite",en:"Elite Creators & Artists"},color:"#A06020",items:[{es:"Lanzar obra/producto en Hora Venusiana — máxima atracción",en:"Launch work/product in Venus hour — maximum attraction"},{es:"Negociar derechos y licencias en Hora de Mercurio",en:"Negotiate rights and licenses during Mercury hour"},{es:"Integrar Sigilo personal en identidad visual de marca",en:"Integrate personal Sigil into brand visual identity"}]}];
+
+// ═══════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════
+let lang='es', phase=1, done=[], identity=null, planetaryData=null;
+let selectedKamea=3, sigilNums=[], kpiChecked={};
+let coords=null, geoStatus='idle', logs=[];
+let oracleStep=0, oracleCatVal='', oracleDomainVal='', oracleProbVal='';
+
+// ═══════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════
+const T=(obj)=>typeof obj==='string'?obj:(obj?.[lang]||'');
+const toASCII=(s)=>s.split('').map(c=>c.charCodeAt(0));
+const toBin=(n)=>n.toString(2).padStart(8,'0');
+const theoReduce=(n)=>{while(n>9)n=String(n).split('').reduce((a,d)=>a+parseInt(d),0);return n;};
+const reduceToRange=(n,max)=>{while(n>max)n=String(n).split('').reduce((a,d)=>a+parseInt(d),0);return Math.max(1,Math.min(max,n));};
+
+const genTheurgicID=(name,loc)=>{
+  const s=(name+loc).toUpperCase();let h=0x9E3779B9>>>0;
+  for(let i=0;i<s.length;i++){h^=s.charCodeAt(i)*0x27D4EB2F;h=(((h<<5)|(h>>>27))^(h*0x9E3779B9))>>>0;}
+  return h.toString(16).toUpperCase().padStart(8,'0');
+};
+
+const getNatalPotency=(d)=>{if(!d)return null;return theoReduce(d.replace(/-/g,'').split('').reduce((a,c)=>a+parseInt(c),0));};
+
+const addLog=(msg)=>{logs=[...logs.slice(-10),`[${new Date().toLocaleTimeString()}] ${msg}`];renderLog();};
+const renderLog=()=>{const b=document.getElementById('log-box');b.style.display='block';document.getElementById('logEntries').innerHTML=logs.map(l=>`<div class="log-entry">${l}</div>`).join('');};
+
+// ═══════════════════════════════════════════════════════════
+// CLOCK
+// ═══════════════════════════════════════════════════════════
+setInterval(()=>{
+  const now=new Date();
+  document.getElementById('clock').textContent=now.toLocaleTimeString('en-GB');
+  document.getElementById('clockdate').textContent=now.toLocaleDateString('en-GB',{weekday:'short',day:'2-digit',month:'short'}).toUpperCase();
+},1000);
+
+// ═══════════════════════════════════════════════════════════
+// LANG
+// ═══════════════════════════════════════════════════════════
+function toggleLang(){
+  lang=lang==='es'?'en':'es';
+  document.getElementById('langBtn').textContent='🌐 '+lang.toUpperCase();
+  applyLang();
+}
+function applyLang(){
+  // oracle labels
+  const oT={es:'MÓDULO DE ENTRADA — INTENCIÓN OPERATIVA',en:'INPUT MODULE — OPERATIVE INTENTION'};
+  el('oTit').textContent=T(oT);
+  el('oLbl1').textContent=lang==='es'?'▸ CATEGORÍA DE INTERVENCIÓN':'▸ INTERVENTION CATEGORY';
+  el('oLbl2').textContent=lang==='es'?'▸ DOMINIO ESPECÍFICO':'▸ SPECIFIC DOMAIN';
+  el('oLbl3').textContent=lang==='es'?'▸ DESCRIPCIÓN DE LA PROBLEMÁTICA':'▸ PROBLEM DESCRIPTION';
+  el('oB1t').textContent=lang==='es'?'AUDITORÍA DE IDENTIDAD':'IDENTITY AUDIT';
+  el('oB2t').textContent=lang==='es'?'ANÁLISIS ESTELAR & PSICOLÓGICO':'STELLAR & PSYCHOLOGICAL ANALYSIS';
+  el('oB3t').textContent=lang==='es'?'FORJA — KAMEA & SIGILO':'FORGE — KAMEA & SIGIL';
+  el('oB4t').textContent=lang==='es'?'CONCLUSIONES & CRONOCRACIA':'CONCLUSIONS & CHRONOCRACY';
+  // identity labels
+  el('ph1Title').textContent=lang==='es'?'FASE I — SINCRONIZACIÓN DE IDENTIDAD':'PHASE I — IDENTITY SYNCHRONIZATION';
+  el('ph1Status').textContent=lang==='es'?'● SINCRONIZADO':'● SYNCHRONIZED';
+  el('ph2Title').textContent=lang==='es'?'FASE II — MAPEO ESTELAR & CRONOCRACIA':'PHASE II — STELLAR MAPPING & CHRONOCRACY';
+  el('ph2Status').textContent=lang==='es'?'● CARTOGRAFIADO':'● CHARTED';
+  el('ph3Title').textContent=lang==='es'?'FASE III — KAMEA & FORJA DE SIGILO':'PHASE III — KAMEA & SIGIL FORGE';
+  el('ph3Status').textContent=lang==='es'?'● FORJADO':'● FORGED';
+  el('ph4Title').textContent=lang==='es'?'FASE IV — PLAN EJECUTIVO DE OPERACIÓN':'PHASE IV — EXECUTIVE OPERATION PLAN';
+  el('lName').textContent=lang==='es'?'NOMBRE OPERATIVO':'OPERATIVE NAME';
+  el('lLoc').textContent=lang==='es'?'ANCLAJE GEOGRÁFICO':'GEOGRAPHIC ANCHOR';
+  el('lGeo').textContent=lang==='es'?'COORDENADAS GPS':'GPS COORDINATES';
+  el('lDate').textContent=lang==='es'?'FECHA NATAL (YYYY-MM-DD)':'NATAL DATE (YYYY-MM-DD)';
+  el('lTime').textContent=lang==='es'?'HORA NATAL (OPCIONAL)':'NATAL TIME (OPTIONAL)';
+  el('warnText').textContent=lang==='es'?'LA IMPRECISIÓN ES EL VELO DE LA VERDAD. La hora exacta es requerida para alineación cronocrática completa.':'IMPRECISION IS THE VEIL OF TRUTH. Exact time required for complete Chronocratic Alignment.';
+  el('geoText').textContent=lang==='es'?'Obtener coordenadas reales':'Get real coordinates';
+  el('dHours').textContent=lang==='es'?'HORA PLANETARIA ACTUAL':'CURRENT PLANETARY HOUR';
+  el('dStars').textContent=lang==='es'?'ESTRELLAS BEHENIAN (AGRIPPA)':'BEHENIAN FIXED STARS (AGRIPPA)';
+  el('dKamea').textContent=lang==='es'?'CUADRADO MÁGICO (KAMEA)':'MAGIC SQUARE (KAMEA)';
+  el('dSigil').textContent=lang==='es'?'SIGILO VECTORIAL':'VECTORIAL SIGIL';
+  el('syncBtn').textContent='⊕ '+(lang==='es'?'SINCRONIZAR IDENTIDAD':'SYNCHRONIZE IDENTITY');
+  el('stellarBtn').textContent='✦ '+(lang==='es'?'COMPUTAR ALINEACIÓN ESTELAR':'COMPUTE STELLAR ALIGNMENT');
+  el('sigilBtn').textContent='⬡ '+(lang==='es'?'FORJAR SIGILO':'FORGE SIGIL');
+  el('kameaInfoBtn').textContent=lang==='es'?'¿Qué es un Kamea?':'What is a Kamea?';
+  el('kameaInfoTitle').textContent=lang==='es'?'¿QUÉ ES UN KAMEA?':'WHAT IS A KAMEA?';
+  el('kameaInfoText').textContent=lang==='es'?'Un Kamea (del hebreo קָמֵעַ) es un cuadrado mágico donde cada fila, columna y diagonal suman el mismo número. Agrippa los codifica en Occulta Philosophia (1531) como matrices de poder planetario.':'A Kamea (from Hebrew קָמֵעַ) is a magic square where every row, column and diagonal sum to the same number. Agrippa encodes them in Occulta Philosophia (1531) as matrices of planetary power.';
+  el('sigilInfoBtn').textContent=lang==='es'?'¿Cómo se genera el Sigilo?':'How is the Sigil generated?';
+  el('sigilInfoTitle').textContent=lang==='es'?'¿CÓMO SE GENERA EL SIGILO?':'HOW IS THE SIGIL GENERATED?';
+  el('sigilInfoText').textContent=lang==='es'?'Cada letra del nombre se convierte a ASCII, sufre reducción teosófica y se mapea como nodo en la cuadrícula. Se traza un vector continuo conectando cada nodo.':'Each letter is converted to ASCII, undergoes theosophical reduction, and is mapped as a node on the grid. A continuous vector traces through each node in sequence.';
+  el('progLabel').textContent=lang==='es'?'PROGRESO DE OPERACIÓN':'OPERATION PROGRESS';
+  el('completeText').textContent=lang==='es'?'Alineación Teúrgica Alcanzada · ANGELVS OS v5.0':'Theurgic Alignment Achieved · ANGELVS OS v5.0';
+  el('ftSource').textContent=lang==='es'?'Fundado sobre Agrippa · Dee · Trithemius · Barrett':'Founded upon Agrippa · Dee · Trithemius · Barrett';
+  el('ftDomain').textContent=lang==='es'?'OUT OF DOMAIN: Consultas fuera de fuentes primarias no serán procesadas.':'OUT OF DOMAIN: Queries outside primary sources will not be processed.';
+  // tabs
+  el('tab-identity-btn').textContent=lang==='es'?'◈ SISTEMA DE IDENTIDAD':'◈ IDENTITY SYSTEM';
+  el('tab-oracle-btn').textContent=lang==='es'?'◈ ORÁCULO TEÚRGICO':'◈ THEURGIC ORACLE';
+  // re-render dynamic
+  oracleCatChange();
+  renderKamea();
+  renderStars();
+  renderKPI();
+}
+
+const el=(id)=>document.getElementById(id);
+
+// ═══════════════════════════════════════════════════════════
+// TABS
+// ═══════════════════════════════════════════════════════════
+function switchTab(t){
+  ['identity','oracle'].forEach(id=>{
+    el('tab-'+id).classList.toggle('active',id===t);
+    el('tab-'+id+'-btn').classList.toggle('active',id===t);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// FORM VALIDATION
+// ═══════════════════════════════════════════════════════════
+['iName','iLoc','iBirth','iTime'].forEach(id=>{
+  el(id).addEventListener('input',checkPhase1);
+});
+el('iTime').addEventListener('input',()=>{
+  el('timeWarn').style.display=el('iTime').value?'none':'flex';
+  checkPhase1();
+});
+function checkPhase1(){
+  const ok=el('iName').value.trim()&&el('iLoc').value.trim()&&el('iBirth').value;
+  el('syncBtn').disabled=!ok;
+}
+
+// ═══════════════════════════════════════════════════════════
+// GEO
+// ═══════════════════════════════════════════════════════════
+function requestGeo(){
+  if(!navigator.geolocation){geoStatus='error';renderGeo();return;}
+  geoStatus='loading';renderGeo();
+  navigator.geolocation.getCurrentPosition(
+    p=>{coords={lat:p.coords.latitude,lng:p.coords.longitude};geoStatus='success';renderGeo();addLog(`GEO_LOCK: ${coords.lat.toFixed(4)}°N ${coords.lng.toFixed(4)}°E`);},
+    ()=>{geoStatus='denied';renderGeo();},{timeout:10000}
+  );
+}
+function renderGeo(){
+  const s=el('geoStatus');
+  if(geoStatus==='loading') s.innerHTML=`<span class="mono" style="color:#C47A1A;font-size:10px">⟳ ${lang==='es'?'Localizando...':'Locating...'}</span>`;
+  else if(geoStatus==='success'&&coords) s.innerHTML=`<div class="mono" style="border:1px solid #2E7D5B55;background:#2E7D5B10;padding:7px;color:#2E7D5B;font-size:10px">✓ ${coords.lat.toFixed(4)}°N · ${coords.lng.toFixed(4)}°E</div>`;
+  else if(geoStatus==='denied') s.innerHTML=`<div style="border:1px solid #A0302055;background:#A0302010;padding:7px"><span class="mono" style="color:#A03020;font-size:9px">${lang==='es'?'Permiso denegado. Se usará México D.F. (19.4326°N, 99.1332°W).':'Permission denied. Mexico City used as reference.'}</span></div>`;
+  else s.innerHTML='';
+}
+
+// ═══════════════════════════════════════════════════════════
+// PHASE 1
+// ═══════════════════════════════════════════════════════════
+function executePhase1(){
+  const name=el('iName').value.trim(), loc=el('iLoc').value.trim(), bDate=el('iBirth').value, bTime=el('iTime').value;
+  if(!name||!loc||!bDate) return;
+  const asciiName=toASCII(name), theurgicID=genTheurgicID(name,loc), natalPotency=getNatalPotency(bDate);
+  identity={name,loc,bDate,bTime,asciiName,theurgicID,natalPotency};
+  done.push(1); phase=2;
+  addLog(`IDENTITY_SYNC: ${name} → ID:${theurgicID} P:${natalPotency}`);
+  renderIdentityResults();
+  el('syncBtn').remove();
+  ['iName','iLoc','iBirth','iTime','geoBtn'].forEach(i=>{if(el(i))el(i).disabled=true});
+  el('ph1Status').classList.remove('hidden');
+  el('phase1Panel').classList.add('done-panel');
+  el('phase2Panel').classList.remove('hidden');
+  updatePills();
+  renderStars();
+}
+
+function renderIdentityResults(){
+  // ASCII
+  let asciiH='';
+  identity.asciiName.slice(0,7).forEach((v,i)=>{
+    asciiH+=`<div class="ascii-row"><span class="ascii-char cinzel">${identity.name[i]||''}</span><span class="ascii-num mono">${v}</span><span class="ascii-bin mono">${toBin(v)}</span></div>`;
+  });
+  if(identity.asciiName.length>7) asciiH+=`<div class="mono" style="color:var(--tx3);font-size:8px">+${identity.asciiName.length-7} ${lang==='es'?'más':'more'}</div>`;
+  el('asciiDisplay').innerHTML=asciiH;
+  el('theurgicID').textContent=identity.theurgicID;
+  el('theurgicSub').textContent=identity.name+' × '+identity.loc;
+  // Potency
+  const pd=POTENCY_DESC[identity.natalPotency];
+  if(pd) el('potencyCard').innerHTML=`
+    <div class="mono mb-2" style="color:var(--tx3);font-size:9px;letter-spacing:2.5px">${lang==='es'?'POTENCIA NATAL':'NATAL POTENCY'}</div>
+    <div style="display:flex;align-items:flex-start;gap:10px">
+      <div class="cinzel" style="color:var(--g);font-size:40px;line-height:1;font-weight:900">${identity.natalPotency}</div>
+      <div>
+        <div class="cinzel" style="color:var(--tx);font-size:10px;font-weight:700;letter-spacing:1px">${lang==='es'?pd.title:pd.en}</div>
+        <div class="garamond italic mt-1" style="color:var(--tx2);font-size:11px">${pd.archetype}</div>
+        <div class="mono mt-1" style="color:var(--tx3);font-size:9px">${pd.planet}</div>
+        <div class="garamond mt-2" style="color:var(--tx2);font-size:10px;line-height:1.5">${lang==='es'?pd.desc:pd.descEn}</div>
+        <div class="cinzel mt-2" style="color:var(--g);font-size:9px;font-weight:700;letter-spacing:2.5px">◈ ${pd.keyword}</div>
+      </div>
+    </div>`;
+  el('identityResults').classList.remove('hidden');
+}
+
+// ═══════════════════════════════════════════════════════════
+// PHASE 2 — PLANETARY HOURS
+// ═══════════════════════════════════════════════════════════
+function getSunriseSunset(lat,lng,date){
+  const rad=Math.PI/180, doy=Math.floor((date-new Date(date.getFullYear(),0,0))/86400000);
+  const dec=23.45*Math.sin(rad*(360/365)*(doy-81));
+  const ha=Math.acos((-Math.sin(rad*0.833)-Math.sin(rad*lat)*Math.sin(rad*dec))/(Math.cos(rad*lat)*Math.cos(rad*dec)))/rad;
+  const noon=12-lng/15, srH=noon-ha/15, ssH=noon+ha/15;
+  const sr=new Date(date); sr.setHours(Math.floor(srH),Math.round((srH%1)*60),0,0);
+  const ss=new Date(date); ss.setHours(Math.floor(ssH),Math.round((ssH%1)*60),0,0);
+  return{sunrise:sr,sunset:ss};
+}
+function getPlanetaryHour(lat=19.4326,lng=-99.1332){
+  const now=new Date(), dw=now.getDay(), dr=DAY_RULER[dw], ri=CHALDEAN.indexOf(dr);
+  const{sunrise,sunset}=getSunriseSunset(lat,lng,now);
+  const ns=new Date(sunrise.getTime()+86400000);
+  const isD=now>=sunrise&&now<sunset, ps=isD?sunrise:sunset, pe=isD?sunset:ns;
+  const hl=(pe-ps)/12, el2=now-ps, hi=Math.max(0,Math.min(11,Math.floor(el2/hl))), ml=Math.round((hl-(el2%hl))/60000);
+  const planet=CHALDEAN[(ri+hi)%7];
+  return{planet,symbol:PLANET_SYM[planet],color:PLANET_COLOR[planet],hour:hi+1,isDiurnal:isD,dayRuler:dr,minutesLeft:ml,
+    sunriseStr:sunrise.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}),
+    sunsetStr:sunset.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}),
+    allHours:Array.from({length:12},(_,i)=>{const p=CHALDEAN[(ri+i)%7];return{n:i+1,planet:p,symbol:PLANET_SYM[p],color:PLANET_COLOR[p],active:i===hi};})};
+}
+
+function executePhase2(){
+  const lat=coords?.lat??19.4326, lng=coords?.lng??-99.1332;
+  planetaryData=getPlanetaryHour(lat,lng);
+  done.push(2); phase=3;
+  addLog(`STELLAR_MAP: ${planetaryData.planet} H${planetaryData.hour} ${planetaryData.isDiurnal?'DIURNAL':'NOCTURNAL'}`);
+  renderPlanetaryHour();
+  el('stellarBtn').remove();
+  el('ph2Status').classList.remove('hidden');
+  el('phase2Panel').classList.add('done-panel');
+  el('phase3Panel').classList.remove('hidden');
+  updatePills();
+  renderKamea();
+  renderSigil();
+}
+
+function renderPlanetaryHour(){
+  const d=planetaryData;
+  let hourGrid='';
+  d.allHours.forEach(h=>{
+    hourGrid+=`<div class="hour-cell ${h.active?'active-hour':''}" style="border-color:${h.active?h.color:'#C4973A22'};background:${h.active?h.color+'22':'transparent'}">
+      <span class="hour-sym" style="color:${h.color}">${h.symbol}</span>
+      <span class="hour-num">${h.n}</span>
+    </div>`;
+  });
+  el('planetHourDisplay').innerHTML=`
+    <div class="ph-block" style="border-color:${d.color}55;background:${d.color}12">
+      <div style="display:flex;align-items:center;gap:20px">
+        <div class="cinzel" style="color:${d.color};font-size:56px;line-height:1;font-weight:900">${d.symbol}</div>
+        <div>
+          <div class="cinzel" style="color:${d.color};font-size:20px;font-weight:900">${d.planet}</div>
+          <div class="mono mt-1" style="color:var(--tx2);font-size:10px">${lang==='es'?'Hora':'Hour'} ${d.hour}/12 · ${d.isDiurnal?(lang==='es'?'DIURNA':'DIURNAL'):(lang==='es'?'NOCTURNA':'NOCTURNAL')}</div>
+          <div class="mono" style="color:var(--g);font-size:10px">${lang==='es'?'Día de':'Day of'} ${d.dayRuler} · ↑${d.sunriseStr} ↓${d.sunsetStr}</div>
+          <div class="mono mt-1" style="color:var(--tx3);font-size:9px">${d.minutesLeft} ${lang==='es'?'min restantes':'min remaining'}</div>
+          <div class="garamond italic mt-2" style="color:var(--tx2);font-size:11px">${T(PLANET_VIRTUES[d.planet])}</div>
+        </div>
+      </div>
+    </div>
+    <div class="hour-grid">${hourGrid}</div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// STARS
+// ═══════════════════════════════════════════════════════════
+let expandedStar=null;
+function renderStars(){
+  let h='';
+  BEHENIAN_STARS.forEach(star=>{
+    const isExp=expandedStar===star.name;
+    h+=`<div>
+      <div class="star-row ${isExp?'expanded':''}" onclick="toggleStar('${star.name}')">
+        <span style="color:var(--g);font-size:7px" class="pulse-diamond">◆</span>
+        <span class="star-name">${star.name}</span>
+        <span class="star-sign mono">${star.sign}</span>
+        <span class="star-virtue">${T(star.virtue)}</span>
+        <span class="star-chevron" style="transform:${isExp?'rotate(90deg)':'none'}">›</span>
+      </div>
+      <div class="star-detail ${isExp?'open':''}">
+        <div class="star-detail-grid">
+          <div><div class="detail-lbl cinzel">${lang==='es'?'PLANETA':'PLANET'}</div><div class="detail-val">${star.planet}</div></div>
+          <div><div class="detail-lbl cinzel">MAG</div><div class="mono" style="color:var(--tx2);font-size:10px">${star.magnitude}</div></div>
+        </div>
+        <div class="detail-lbl cinzel">${lang==='es'?'APLICACIÓN EJECUTIVA':'EXECUTIVE APPLICATION'}</div>
+        <div class="detail-val">${T(star.application)}</div>
+        <div style="display:flex;gap:16px;margin-top:8px">
+          <span class="mono" style="color:var(--tx2);font-size:9px">${lang==='es'?'Piedra:':'Stone:'} ${star.stone}</span>
+          <span class="mono" style="color:var(--tx2);font-size:9px">${lang==='es'?'Hierba:':'Herb:'} ${star.herb}</span>
+        </div>
+      </div>
+    </div>`;
+  });
+  el('starsTable').innerHTML=h;
+}
+function toggleStar(name){expandedStar=expandedStar===name?null:name;renderStars();}
+
+// ═══════════════════════════════════════════════════════════
+// PHASE 3 — KAMEA
+// ═══════════════════════════════════════════════════════════
+function renderKamea(){
+  // Selector
+  let s='';
+  Object.entries(KAMEA_DATA).forEach(([order,data])=>{
+    const active=selectedKamea===Number(order);
+    s+=`<button class="kamea-btn ${active?'active':''}" onclick="selectKamea(${order})">${order}×${order} ${data.symbol}</button>`;
+  });
+  el('kameaSelector').innerHTML=s;
+  // Desc
+  const k=KAMEA_DATA[selectedKamea];
+  el('kameaDesc').innerHTML=`<div class="cinzel" style="color:var(--g);font-size:11px;font-weight:700;margin-bottom:6px">${k.planet}</div>
+    <div class="garamond" style="color:var(--tx2);font-size:11px;line-height:1.6">${T(k.desc)}</div>
+    <div class="mono mt-2" style="color:var(--tx3);font-size:9px">Σ ${lang==='es'?'fila':'row'} = ${k.sum} · Σ total = ${k.total}</div>`;
+  // Grid
+  const sz=selectedKamea<=4?34:selectedKamea<=6?28:selectedKamea<=7?24:20;
+  const grid=el('kamea-grid');
+  grid.style.gridTemplateColumns=`repeat(${selectedKamea},1fr)`;
+  grid.innerHTML='';
+  k.magic.forEach(n=>{
+    const onSigil=sigilNums.includes(n);
+    const cell=document.createElement('div');
+    cell.className='kamea-cell'+(onSigil?' highlight':'');
+    cell.style.width=sz+'px'; cell.style.height=sz+'px';
+    cell.style.fontSize=(sz<=22?'7':sz<=26?'9':'10')+'px';
+    cell.textContent=n;
+    grid.appendChild(cell);
+  });
+}
+function selectKamea(n){selectedKamea=n;renderKamea();renderSigil();}
+function toggleKameaInfo(){const p=el('kameaInfo');p.classList.toggle('hidden');}
+function toggleSigilInfo(){const p=el('sigilInfo');p.classList.toggle('hidden');}
+
+// ═══════════════════════════════════════════════════════════
+// SIGIL
+// ═══════════════════════════════════════════════════════════
+function renderSigil(){
+  if(!identity) return;
+  const name=identity.name.toUpperCase().replace(/[^A-Z]/g,'');
+  const max=selectedKamea*selectedKamea;
+  const nums=toASCII(name).map(v=>reduceToRange(theoReduce(v),max));
+  sigilNums=nums;
+  const cs=260/selectedKamea, pad=40;
+  const getPos=(n)=>{const idx=n-1;return{x:pad+(idx%selectedKamea)*cs+cs/2,y:pad+Math.floor(idx/selectedKamea)*cs+cs/2};};
+  const pts=nums.map(getPos);
+  const path=pts.map((p,i)=>`${i===0?'M':'L'}${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
+  // Build SVG
+  let gridLines='';
+  for(let r=0;r<selectedKamea;r++) for(let c=0;c<selectedKamea;c++)
+    gridLines+=`<rect x="${pad+c*cs}" y="${pad+r*cs}" width="${cs}" height="${cs}" fill="none" stroke="#C4973A33" stroke-width=".5"/>`;
+  let ptMarks='';
+  pts.forEach((p,i)=>{
+    ptMarks+=`<circle cx="${p.x}" cy="${p.y}" r="5" fill="#E4D9BE" stroke="#8B6914" stroke-width="1.5"/>`;
+    if(i===0) ptMarks+=`<circle cx="${p.x}" cy="${p.y}" r="9" fill="none" stroke="#C4973A88" stroke-width=".8"/>`;
+    if(i===pts.length-1) ptMarks+=`<rect x="${p.x-5}" y="${p.y-5}" width="10" height="10" fill="#E4D9BE" stroke="#8B6914" stroke-width="1.5"/>`;
+  });
+  const svg=el('sigil-svg');
+  svg.innerHTML=`${gridLines}
+    <path d="${path}" fill="none" stroke="#C4973A44" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" style="filter:blur(3px)"/>
+    <path d="${path}" fill="none" stroke="#8B6914" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="sigil-path"/>
+    ${ptMarks}
+    <text x="170" y="325" text-anchor="middle" font-family="Cinzel" font-size="8" fill="#8B691488" letter-spacing="3">${identity.name.toUpperCase()} · ${selectedKamea}×${selectedKamea} · ${KAMEA_DATA[selectedKamea].symbol}</text>`;
+  el('sigilSeq').textContent=(lang==='es'?'Secuencia:':'Sequence:')+' '+nums.join(' → ');
+  el('sigilNote').textContent='ASCII → '+(lang==='es'?'reducción teosófica → nodos en cuadrícula → vector continuo':'theosophic reduction → grid nodes → continuous vector');
+  renderKamea();
+}
+
+function executePhase3(){
+  done.push(3); phase=4;
+  addLog(`SIGIL_FORGED: Kamea-${selectedKamea} ${KAMEA_DATA[selectedKamea].planet}`);
+  el('sigilBtn').remove();
+  el('ph3Status').classList.remove('hidden');
+  el('phase3Panel').classList.add('done-panel');
+  el('phase4Panel').classList.remove('hidden');
+  updatePills();
+  renderKPI();
+}
+
+// ═══════════════════════════════════════════════════════════
+// KPI
+// ═══════════════════════════════════════════════════════════
+function renderKPI(){
+  let h='';
+  KPI_CATS.forEach((cat,ci)=>{
+    let items='';
+    cat.items.forEach((item,ii)=>{
+      const key=`${ci}-${ii}`, checked=!!kpiChecked[key];
+      items+=`<div class="kpi-item" style="border-color:${checked?cat.color:cat.color+'22'};background:${checked?cat.color+'14':'transparent'}" onclick="toggleKPI('${key}')">
+        <div class="kpi-check" style="border-color:${checked?cat.color:cat.color+'66'};background:${checked?cat.color:'transparent'}">
+          ${checked?`<span style="color:#F5EFE0;font-size:8px;font-weight:bold">✓</span>`:''}
+        </div>
+        <span class="kpi-text" style="color:${checked?cat.color:'var(--tx2)'};text-decoration:${checked?'line-through':'none'}">${T(item)}</span>
+      </div>`;
+    });
+    h+=`<div class="kpi-cat" style="border-color:${cat.color}44;background:${cat.color}08">
+      <div class="kpi-cat-header">
+        <span style="color:${cat.color};font-size:13px">${cat.icon}</span>
+        <span class="cinzel kpi-cat-title" style="color:${cat.color}">${T(cat.label)}</span>
+      </div>
+      ${items}
+    </div>`;
+  });
+  el('kpiGrid').innerHTML=h;
+  updateProgress();
+  renderSummary();
+}
+
+function toggleKPI(key){kpiChecked[key]=!kpiChecked[key];renderKPI();}
+
+function updateProgress(){
+  const total=KPI_CATS.reduce((a,c)=>a+c.items.length,0);
+  const checked=Object.values(kpiChecked).filter(Boolean).length;
+  const pct=Math.round((checked/total)*100);
+  el('kpiCounter').textContent=`${checked}/${total} ${lang==='es'?'EJECUTADO':'EXECUTED'}`;
+  el('progPct').textContent=pct+'%';
+  el('progFill').style.width=pct+'%';
+  if(pct===100) el('completeBanner').classList.remove('hidden');
+  else el('completeBanner').classList.add('hidden');
+}
+
+function renderSummary(){
+  if(!identity) return;
+  const rows=[
+    {l:'THEURGIC ID',v:identity.theurgicID},
+    {l:lang==='es'?'POTENCIA NATAL':'NATAL POTENCY',v:`${identity.natalPotency} · ${POTENCY_DESC[identity.natalPotency]?.keyword}`},
+    {l:lang==='es'?'HORA ACTUAL':'CURRENT HOUR',v:planetaryData?`${planetaryData.symbol} ${planetaryData.planet}`:'—'},
+    {l:'KAMEA',v:`${selectedKamea}×${selectedKamea} · ${KAMEA_DATA[selectedKamea].symbol} ${KAMEA_DATA[selectedKamea].planet.split(' / ')[0]}`},
+  ];
+  el('summaryCard').innerHTML=`<div style="margin-bottom:12px"><div class="divider"><span>${lang==='es'?'RESUMEN OPERATIVO':'OPERATIVE SUMMARY'}</span></div></div>
+    <div class="summary-grid">${rows.map(r=>`<div><div class="mono mb-1" style="color:var(--tx3);font-size:8px;letter-spacing:2px">${r.l}</div><div class="cinzel" style="color:var(--tx);font-size:10px;font-weight:700">${r.v||'—'}</div></div>`).join('')}</div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// PHASE PILLS
+// ═══════════════════════════════════════════════════════════
+function updatePills(){
+  [1,2,3,4].forEach(n=>{
+    const p=el('pp'+n);
+    if(done.includes(n)){p.className='phase-pill done';p.textContent='✓ '+n+'. '+(lang==='es'?['IDENTIDAD','MAPEO ESTELAR','FORJAR SIGILO','EJECUTAR PLAN']:['IDENTITY','STELLAR MAP','FORGE SIGIL','EXECUTE PLAN'])[n-1];}
+    else if(phase===n){p.className='phase-pill active';p.textContent='▸ '+n+'. '+(lang==='es'?['IDENTIDAD','MAPEO ESTELAR','FORJAR SIGILO','EJECUTAR PLAN']:['IDENTITY','STELLAR MAP','FORGE SIGIL','EXECUTE PLAN'])[n-1];}
+    else{p.className='phase-pill';p.textContent='🔒 '+n+'. '+(lang==='es'?['IDENTIDAD','MAPEO ESTELAR','FORJAR SIGILO','EJECUTAR PLAN']:['IDENTITY','STELLAR MAP','FORGE SIGIL','EXECUTE PLAN'])[n-1];}
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// ORACLE
+// ═══════════════════════════════════════════════════════════
+function oracleCatChange(){
+  oracleCatVal=el('oracleCat').value;
+  oracleStep=0;
+  ['oOut1','oOut2','oOut3','oOut4'].forEach(id=>{el(id).classList.add('hidden');});
+  ['oBtn1','oBtn2','oBtn3','oBtn4'].forEach(id=>{el(id).classList.remove('done-step');});
+  el('oBtn1').disabled=!(oracleCatVal&&el('oracleProb').value.trim());
+  // Domains
+  const dom=ORACLE_DB.domains[lang]?.[oracleCatVal]||[lang==='es'?'— Seleccionar —':'— Select —'];
+  el('oracleDomain').innerHTML=dom.map((d,i)=>`<option value="${i===0?'':d}">${d}</option>`).join('');
+  el('oBtn2').disabled=true; el('oBtn3').disabled=true; el('oBtn4').disabled=true;
+}
+el('oracleProb').addEventListener('input',()=>{el('oBtn1').disabled=!(el('oracleCat').value&&el('oracleProb').value.trim());});
+
+function oracleStep1(){
+  const cat=el('oracleCat').value, prob=el('oracleProb').value.trim();
+  if(!cat||!prob) return;
+  oracleCatVal=cat; oracleProbVal=prob;
+  const ascii=prob.substring(0,20).split('').map(c=>c.charCodeAt(0)).join('-');
+  const bin=prob.substring(0,4).split('').map(c=>c.charCodeAt(0).toString(2).padStart(8,'0')).join(' ');
+  let s=prob.split('').reduce((a,c)=>a+c.charCodeAt(0),0), steps=[s];
+  while(s>9){s=String(s).split('').reduce((a,d)=>a+parseInt(d),0);steps.push(s);}
+  const gem=prob.replace(/[^a-z]/gi,'').toUpperCase().split('').reduce((a,c)=>a+c.charCodeAt(0),0)%100;
+  const catD=ORACLE_DB.categories[cat]||{};
+  el('oOut1c').innerHTML=`
+    <div class="grid2" style="gap:20px">
+      <div>
+        <div class="mono mb-2" style="color:var(--g2);font-size:9px;letter-spacing:2px">${lang==='es'?'CADENA ASCII:':'ASCII CHAIN:'}</div>
+        <div class="mono" style="color:var(--tx2);font-size:10px;word-break:break-all">${ascii}</div>
+        <div class="mono mt-3 mb-2" style="color:var(--g2);font-size:9px;letter-spacing:2px">${lang==='es'?'BINARIO:':'BINARY:'}</div>
+        <div class="mono" style="color:var(--tx2);font-size:9px;word-break:break-all">${bin}</div>
+      </div>
+      <div>
+        <div class="mono mb-2" style="color:var(--g2);font-size:9px;letter-spacing:2px">${lang==='es'?'REDUCCIÓN TEOSÓFICA:':'THEOSOPHIC REDUCTION:'}</div>
+        <div class="mono" style="color:var(--tx);font-size:11px">${steps.join(' → ')} → <span style="color:var(--g);font-weight:bold">${s}</span></div>
+        <div class="mono mt-3 mb-1" style="color:var(--g2);font-size:9px;letter-spacing:2px">${lang==='es'?'VALOR GEOMÁTICO:':'GEMATRIC VALUE:'}</div>
+        <div class="cinzel" style="color:var(--g);font-size:22px;font-weight:900">${gem}</div>
+        <div class="mono mt-3" style="color:var(--g);font-size:9px">${lang==='es'?'PLANETA:':'PLANET:'} <span style="color:var(--tx)">${catD.planet||'—'}</span> · ${lang==='es'?'ÁNGEL:':'ANGEL:'} <span style="color:var(--tx)">${catD.angel||'—'}</span></div>
+      </div>
+    </div>
+    <div class="mono mt-4" style="color:var(--tx3);font-size:9px;border-top:1px solid #C4973A33;padding-top:8px">// ${lang==='es'?'Identidad operativa registrada. Procede al análisis estelar.':'Operative identity registered. Proceed to stellar analysis.'}</div>`;
+  el('oOut1').classList.remove('hidden');
+  el('oBtn1').classList.add('done-step');
+  el('oBtn2').disabled=false;
+  oracleStep=1;
+  addLog(`ORACLE_AUDIT: ${cat} gem:${gem}`);
+}
+
+function oracleStep2(){
+  const cat=el('oracleCat').value;
+  const catD=ORACLE_DB.categories[cat]||{};
+  const star=BEHENIAN_STARS.find(s=>s.name===catD.starKey)||BEHENIAN_STARS[0];
+  const diag=ORACLE_DB.psychDiag[cat]||{};
+  el('oOut2c').innerHTML=`
+    <div class="grid2" style="gap:20px">
+      <div>
+        <div class="mono mb-1" style="color:var(--g2);font-size:9px;letter-spacing:2px">${lang==='es'?'ESTRELLA BEHENIA REGENTE:':'RULING BEHENIAN STAR:'}</div>
+        <div class="cinzel" style="color:var(--g);font-size:16px;font-weight:700">${star.name}</div>
+        <div class="mono" style="color:var(--tx2);font-size:10px">${star.planet} · mag ${star.magnitude}</div>
+        <div class="mono mt-3 mb-1" style="color:var(--g2);font-size:9px;letter-spacing:2px">${lang==='es'?'VIRTUD (AGRIPPA):':'VIRTUE (AGRIPPA):'}</div>
+        <div class="garamond" style="color:var(--tx);font-size:12px;line-height:1.6">${T(star.virtue)}</div>
+        <div class="garamond mt-2" style="color:var(--tx2);font-size:11px;line-height:1.6">${T(star.application)}</div>
+      </div>
+      <div>
+        <div class="mono mb-1" style="color:var(--g2);font-size:9px;letter-spacing:2px">${lang==='es'?'DIAGNÓSTICO PSICO-TEÚRGICO:':'PSYCHO-THEURGIC DIAGNOSIS:'}</div>
+        <div class="garamond" style="color:var(--tx);font-size:12px;line-height:1.7">${T(diag)}</div>
+        <div class="mono mt-4 mb-1" style="color:var(--g2);font-size:9px;letter-spacing:2px">${lang==='es'?'ÁNGEL REGENTE:':'RULING ANGEL:'}</div>
+        <div class="cinzel" style="color:var(--g);font-size:18px;font-weight:900">${catD.angel||'—'}</div>
+        <div class="mono mt-1" style="color:var(--tx3);font-size:9px">${lang==='es'?'Registra este ángel para la convocatoria final.':'Register this angel for the final summoning.'}</div>
+      </div>
+    </div>`;
+  el('oOut2').classList.remove('hidden');
+  el('oBtn2').classList.add('done-step');
+  el('oBtn3').disabled=false;
+  oracleStep=2;
+  addLog(`ORACLE_STAR: ${star.name}`);
+}
+
+function oracleStep3(){
+  const cat=el('oracleCat').value;
+  oracleDomainVal=el('oracleDomain').value;
+  if(!oracleDomainVal){alert(lang==='es'?'⚠ Selecciona el dominio de intervención.':'⚠ Select the intervention domain.');return;}
+  const catD=ORACLE_DB.categories[cat]||{};
+  const kIdx=catD.kamea||4, k=KAMEA_DATA[kIdx];
+  const tal=ORACLE_DB.talisman[cat]||{};
+  const prob=el('oracleProb').value.trim();
+  const gem=prob.replace(/[^a-z]/gi,'').toUpperCase().split('').reduce((a,c)=>a+c.charCodeAt(0),0)%100;
+  // Mini kamea (show up to 5x5=25 cells)
+  const showN=Math.min(25,kIdx*kIdx);
+  let miniCells='';
+  k.magic.slice(0,showN).forEach(n=>{miniCells+=`<div class="ok-cell">${n}</div>`;});
+  if(kIdx*kIdx>25) miniCells+=`<div class="mono" style="font-size:8px;color:var(--tx3);padding:2px">+${kIdx*kIdx-25}…</div>`;
+  // Sigil circle
+  const pts2=[];
+  for(let i=0;i<9;i++){const a=(i/9)*2*Math.PI-Math.PI/2;pts2.push({x:90+65*Math.cos(a),y:90+65*Math.sin(a),n:i+1});}
+  let circPts='';
+  pts2.forEach(p=>{circPts+=`<circle cx="${p.x}" cy="${p.y}" r="4" fill="#E4D9BE" stroke="#C4973A" stroke-width="0.8"/><text x="${p.x}" y="${p.y-7}" text-anchor="middle" fill="#7A5C2E" font-size="7" font-family="Share Tech Mono,monospace">${p.n}</text>`;});
+  let s2=gem, ord2=[];
+  for(let i=0;i<4;i++){const p=(s2%9);ord2.push(p===0?8:p-1);s2=Math.floor(s2*1.618)%99+1;}
+  const sCo=ord2.map(p=>pts2[p]);
+  const sPth=sCo.map((c,i)=>`${i===0?'M':'L'}${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(' ');
+  el('oOut3c').innerHTML=`
+    <div class="grid2" style="gap:20px">
+      <div>
+        <div class="mono mb-2" style="color:var(--g2);font-size:9px;letter-spacing:2px">${lang==='es'?'KAMEA PRESCRITO:':'PRESCRIBED KAMEA:'}</div>
+        <div class="cinzel" style="color:var(--g);font-size:13px;font-weight:700">${k.planet} (${kIdx}×${kIdx})</div>
+        <div class="mono" style="color:var(--tx2);font-size:9px">Σ = ${k.sum} · Total = ${k.total}</div>
+        <div class="mono mt-3 mb-1" style="color:var(--g2);font-size:9px;letter-spacing:2px">${lang==='es'?'IMPLEMENTACIÓN:':'IMPLEMENTATION:'}</div>
+        <div class="garamond" style="color:var(--tx);font-size:12px;line-height:1.6">${T(tal)}</div>
+        <div style="display:grid;grid-template-columns:repeat(${Math.min(kIdx,5)},1fr);gap:2px;max-width:180px;margin-top:12px">${miniCells}</div>
+      </div>
+      <div>
+        <div class="mono mb-2" style="color:var(--g2);font-size:9px;letter-spacing:2px">${lang==='es'?'SIGILO GEOMÁTICO:':'GEMATRIC SIGIL:'}</div>
+        <svg width="180" height="180" style="border:1px solid #C4973A55;background:#E4D9BE;display:block">
+          <circle cx="90" cy="90" r="65" fill="none" stroke="#C4973A44" stroke-width="0.5"/>
+          ${circPts}
+          <path d="${sPth}" fill="none" stroke="#8B6914" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="${sCo[0].x}" cy="${sCo[0].y}" r="6" fill="none" stroke="#8B6914" stroke-width="1.2"/>
+          <circle cx="${sCo[sCo.length-1].x}" cy="${sCo[sCo.length-1].y}" r="3" fill="#8B6914"/>
+        </svg>
+        <div class="mono mt-2" style="color:var(--tx3);font-size:8px">${lang==='es'?'Valor geomático base:':'Base gematric value:'} ${gem}</div>
+      </div>
+    </div>`;
+  el('oOut3').classList.remove('hidden');
+  el('oBtn3').classList.add('done-step');
+  el('oBtn4').disabled=false;
+  oracleStep=3;
+  addLog(`ORACLE_KAMEA: ${kIdx}x${kIdx}`);
+}
+
+function oracleStep4(){
+  const cat=el('oracleCat').value;
+  const catD=ORACLE_DB.categories[cat]||{};
+  const star=BEHENIAN_STARS.find(s=>s.name===catD.starKey)||BEHENIAN_STARS[0];
+  const hour=ORACLE_DB.hours[cat]||{}, tal=ORACLE_DB.talisman[cat]||{};
+  const rows=[
+    {k:lang==='es'?'DIAGNÓSTICO':'DIAGNOSIS',v:`${cat.toUpperCase()} — ${el('oracleDomain').value||'—'}`},
+    {k:lang==='es'?'ESTRELLA BEHENIA':'BEHENIAN STAR',v:star.name},
+    {k:lang==='es'?'ÁNGEL CONVOCADO':'SUMMONED ANGEL',v:catD.angel||'—'},
+    {k:lang==='es'?'HERRAMIENTA':'PRIMARY TOOL',v:`Kamea ${KAMEA_DATA[catD.kamea]?.planet} + Sigilo`},
+    {k:lang==='es'?'IMPLEMENTACIÓN':'IMPLEMENTATION',v:T(tal)},
+    {k:lang==='es'?'HORA DE ACTIVACIÓN':'ACTIVATION HOUR',v:T(hour)},
+    {k:lang==='es'?'NOTA OPERATIVA':'OPERATIVE NOTE',v:lang==='es'?`Tu solución es estable. Implementa este consejo en la Hora de ${catD.angel} para asegurar la conversión del 100%.`:`Your solution is stable. Implement this counsel during ${catD.angel}'s Hour to ensure 100% conversion.`},
+  ];
+  el('oOut4c').innerHTML=rows.map(r=>`<div class="final-row"><span class="final-key cinzel">${r.k}</span><span class="final-val">${r.v}</span></div>`).join('');
+  el('oOut4').classList.remove('hidden');
+  el('oBtn4').classList.add('done-step');
+  oracleStep=4;
+  addLog('ORACLE_COMPLETE: '+cat);
+}
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+renderStars();
+</script>
+</body>
+</html>
